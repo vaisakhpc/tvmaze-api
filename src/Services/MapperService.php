@@ -4,6 +4,11 @@ namespace Src\Services;
 
 class MapperService implements MapperInterface
 {
+    /**
+     * map Success response
+     * @param array $response
+     * @return array
+     */
     public function mapSuccess(array $response): array
     {
         $response = [
@@ -14,6 +19,12 @@ class MapperService implements MapperInterface
         return $response;
     }
 
+    /**
+     * map Failure response
+     * @param int $code
+     * @param string $message
+     * @return array
+     */
     public function mapFailure(int $code, string $message): array
     {
         $response = [

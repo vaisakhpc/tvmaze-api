@@ -8,11 +8,20 @@ class ExceptionMapper
 {
     private $mapper;
 
+    /**
+     * Constructor
+     * @param MapperInterface $mapper
+     */
     public function __construct(MapperInterface $mapper)
     {
         $this->mapper = $mapper;
     }
 
+    /**
+     * map Exception method
+     * @param Throwable $exception
+     * @return array
+     */
     public function mapException(Throwable $exception): array
     {
         $statusCode = method_exists($exception, 'getCode') ? $exception->getCode() : 500;

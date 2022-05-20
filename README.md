@@ -1,24 +1,33 @@
-# Lumen PHP Framework
+# TVMaze API
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
 [![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+This repository contains the code to retrieve data from tvmaze api and run a strict typo check to return only strict matches 
 
-## Official Documentation
+## Steps to follow to deploy
+```cp .env.example .env```
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+```docker-compose up -d --build```
 
-## Contributing
+### This will create containers for nginx, php, composer and redis services.
+### nginx will be spun up in port 8099.
+### url will look like 127.0.0.1:8099/api?q=deadwood
+### To run php unit tests - ```docker exec -it <php container id> /bin/sh``` and run ```./vendor/bin/phpunit``` inside the container.
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Security Vulnerabilities
+## Programming flow followed (DDD- Domain driven design)
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+### Lumen kernel identifies route from routes/web.php
+### middleware for request validation will be called
+### Route reaches Controller after successfull validation
+### Domain class will be injected to the controller through DI
+### Domain method will call the Service class (Search) 
+### Search class will call all the other services like Redis, Client, etc as needed
+### Domain class receives response from Search service class
+### Controller receives response from Domain class
+### middleware terminate will be called to log the responses in storage/logs/ directory
+### Lumen outputs the response in json form
 
-## License
+### Throwing exception is handled in Exception/Hanlder class (render method)
+### Exception mapper is desgined to show the exception in a nice manner
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

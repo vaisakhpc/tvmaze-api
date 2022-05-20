@@ -13,6 +13,11 @@ class ClientService implements ClientInterface
 
     private $logger;
 
+    /**
+     * Constructor
+     * @param Client $client
+     * @param LoggerInterface $logger
+     */
     public function __construct(Client $client, LoggerInterface $logger)
     {
         $this->client = $client;
@@ -20,6 +25,11 @@ class ClientService implements ClientInterface
         $this->endpoint = env('API_ENDPOINT');
     }
 
+    /**
+     * Get method
+     * @param ?string $query
+     * @return string
+     */
     public function get(?string $query)
     {
         $data = [

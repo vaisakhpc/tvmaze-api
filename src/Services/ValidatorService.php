@@ -7,6 +7,11 @@ class ValidatorService implements ValidatorInterface
 {
     private array $error = [];
 
+    /**
+     * validate
+     * @param Request $query
+     * @return bool
+     */
     public function validate(Request $query): bool
     {
         $queryString = $query->get('q');
@@ -18,6 +23,10 @@ class ValidatorService implements ValidatorInterface
         return $return;
     }
 
+    /**
+     * get Errors
+     * @return array
+     */
     public function getErrors(): array
     {
         return $this->error;

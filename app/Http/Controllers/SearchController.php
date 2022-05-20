@@ -23,6 +23,10 @@ class SearchController extends Controller
         $this->mapper = $mapper;
     }
 
+    /**
+     * Search action
+     * @param Request $request
+     */
     public function search(Request $request)
     {
         $response = $this->searchDomain->search($request->get('q'));

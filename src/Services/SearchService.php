@@ -12,6 +12,12 @@ class SearchService implements SearchInterface
 
     private $cacheService;
 
+    /**
+     * Constructor
+     * @param ClientInterface $clientService
+     * @param MovieCollectionInterface $movieCollection
+     * @param CacheInterface $cacheService
+     */
     public function __construct(
         ClientInterface $clientService,
         MovieCollectionInterface $movieCollection,
@@ -22,6 +28,11 @@ class SearchService implements SearchInterface
         $this->cacheService = $cacheService;
     }
 
+    /**
+     * search
+     * @param ?string $query
+     * @return MovieCollectionInterface
+     */
     public function search(?string $query): MovieCollectionInterface
     {
         if ($query) {
